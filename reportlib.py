@@ -77,7 +77,7 @@ def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 
 		suffix = fileExt
 		if isHTML:
 			suffix = suffix + '.html'
-	else if isHTML:
+	elif isHTML:
 		suffix = suffix + '.html'
 	else:
 		suffix = '.rpt'
