@@ -1,3 +1,9 @@
+TAG: lib_py_report-3-1-0-1
+DATE: 12/23/2004
+STAFF: lec
+RELEASE: A
+CHANGES: added sqlOneConnection, sqlLogging
+
 TAG: lib_py_report-4-0-1
 TAG: lib_py_report-4-0-0
 DATE: 03/11/2004
