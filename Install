@@ -1,24 +1,16 @@
-#!/bin/ksh
+#!/bin/csh
 #
-# Installs all .py files under the specified directory, recompiles
-# .pys to .pycs, and sets appropriate permissions.
+# Installs all .py files under the specified directory
+# and sets appropriate permissions.
 
-[ $# -ne 1 ] &&  {
-   echo "Usage: $0" ' <installation directory>' 
-   exit 1
-}
+setenv INSTDIR	$1
 
-INSTDIR=$1
-
-if [ ! -d $INSTDIR ] 
-then
+if ( ! -d $INSTDIR ) then
 	echo "$INSTDIR not a directory!"
 	exit 1
-fi
+endif
 
-chmod ug+w $INSTDIR/*.py
-cp *.py $INSTDIR
-compile_py_libs $INSTDIR
-chgrp progs $INSTDIR/*.py $INSTDIR/*.pyc
-chmod 444 $INSTDIR/*.py
-chmod 664 $INSTDIR/*.pyc
+foreach i (`ls *.py`)
+chmod ug+w $INSTDIR/$i
+cp $i $INSTDIR
+end
