@@ -11,6 +11,7 @@
 #
 #       lec     04/03/2000
 #	- convert to mgi_utils, db from mgdlib
+#	- remove accessionlib
 #
 #       lec     02/07/2000
 #	- TR 1350; changes to copyright notice (trailer())
