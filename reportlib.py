@@ -9,6 +9,9 @@
 #
 # History:
 #
+#       lec     04/03/2000
+#	- convert to mgi_utils, db from mgdlib
+#
 #       lec     02/07/2000
 #	- TR 1350; changes to copyright notice (trailer())
 #
@@ -32,7 +35,8 @@ import sys
 import string
 import posix
 import os
-import mgdlib
+import db
+import mgi_utils
 import accessionlib
 
 TAB = '\t'
@@ -101,7 +105,7 @@ Copyright 1996, 1999, 2000 The Jackson Laboratory
 All Rights Reserved
 Date Generated:  %s
 
-''' % (mgdlib.date())
+''' % (mgi_utils.date())
 )
 
 def trailer(fp):
@@ -239,27 +243,27 @@ def process_ref(fp, command, whichFormat = 1):
 	row = 1
 
 	# At a minimum, the command must return a list of _Refs_keys
-	results = mgdlib.sql(command, 'auto')
+	results = db.sql(command, 'auto')
 
 	for result in results:
 		command = 'select * from BIB_All_View where _Refs_key = %d' % result['_Refs_key']
-		references = mgdlib.sql(command, 'auto')
+		references = db.sql(command, 'auto')
 
 		for ref in references:	# Should be only one
 
-       			authors = `row` + DOT + TAB + mgdlib.prvalue(ref['authors']) + SEP + CRT
+       			authors = `row` + DOT + TAB + mgi_utils.prvalue(ref['authors']) + SEP + CRT
 
         		if len(authors) > column_width:
                 		authors = format_line(authors)
  
-        		title = TAB + mgdlib.prvalue(ref['title']) + CRT
+        		title = TAB + mgi_utils.prvalue(ref['title']) + CRT
  
         		if len(title) > column_width:
                 		title = format_line(title)
  
-        		citation = TAB + mgdlib.prvalue(ref['citation']) + CRT
-       			jnum = TAB + mgdlib.prvalue(ref['jnumID']) + CRT
-       			dbs = TAB + mgdlib.prvalue(ref['dbs']) + CRT
+        		citation = TAB + mgi_utils.prvalue(ref['citation']) + CRT
+       			jnum = TAB + mgi_utils.prvalue(ref['jnumID']) + CRT
+       			dbs = TAB + mgi_utils.prvalue(ref['dbs']) + CRT
 
 			ui = accessionlib.get_accID(ref['_Refs_key'], "Reference", "Medline")
 
@@ -274,7 +278,7 @@ def process_ref(fp, command, whichFormat = 1):
 				fp.write(authors + title + citation + jnum + dbs + CRT)
 		
         		cmd = 'select note from BIB_Notes where _Refs_key = %d order by sequenceNum' % ref['_Refs_key']
-        		notes = mgdlib.sql(cmd, 'auto')
+        		notes = db.sql(cmd, 'auto')
 
 			for note in notes:
 				n = TAB + note['note']
@@ -285,10 +289,10 @@ def process_ref(fp, command, whichFormat = 1):
 
 			if whichFormat == '3':
         			cmd = 'select abstract from BIB_Refs where _Refs_key = %d' % ref['_Refs_key']
-				abstract = mgdlib.sql(cmd, 'auto')
+				abstract = db.sql(cmd, 'auto')
 
 				for abs in abstract:
-					a = TAB + mgdlib.prvalue(abs['abstract'])
+					a = TAB + mgi_utils.prvalue(abs['abstract'])
 					if len(a) > column_width:
 						a = format_line(a)
 
