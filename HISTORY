@@ -1,3 +1,9 @@
+TAG: lib_py_report-1-0-3
+DATE: 04/05/2000
+STAFF: lec
+RELEASE: A
+CHANGES: replaced REPORTDIR w/ HOME
+
 TAG: lib_py_report-1-0-2
 DATE: 04/03/2000
 STAFF: lec
