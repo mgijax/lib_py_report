@@ -53,8 +53,11 @@ def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 
 	'''
 	# requires: outputfile, the name of the output file (string)
 	#           title, the title of the report (string)
-	#	    outputdir, the directory in which to place the output file (string)
+	#	    outputdir, the directory in which to place the output file (string);
+	#	      the default is the current working directory
+	#	    printHeading, set to 1 if the header is to be printed (default is 1)
 	#	    isHTML, set to 1 if the output file is HTML format, 0 otherwise
+	#		(default is 0)
 	#
 	# effects:
 	# 1. Opens the output file under $HOME/mgireport directory for writing
@@ -83,6 +86,7 @@ def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 
 		fp.write("<HTML>")
 		fp.write("<BODY>")
 		fp.write("<PRE>")
+		# see finish_nonps for closing of these markups
 
 	if printHeading:
 		header(fp)
@@ -94,7 +98,7 @@ def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 
 
 def header(fp):
 	'''
-	# input: fp, output file descriptor pointing to an open file
+	# requires: fp, output file descriptor pointing to an open file
 	# effects: writes the standard MGI header to the file
 	'''
 
@@ -110,12 +114,12 @@ Date Generated:  %s
 
 def trailer(fp):
 	'''
-	# input: fp, output file descriptor pointing to an open file
-	# effects: writes the standard MGI warantee trailer to
-	#  the output file file
+	# requires: fp, output file descriptor pointing to an open file
+	# effects: writes the standard MGI warantee trailer to the output file
 	# notes: call this function just before closing. The trailers
 	#  should be placed last in the file.
 	'''
+
 	fp.write(
 '''
 WARRANTY DISCLAIMER AND COPYRIGHT NOTICE
@@ -135,9 +139,6 @@ Laboratory.
 Copyright © 1996, 1999, 2000 by The Jackson Laboratory
 '''
 )
-
-	return
-
 
 def finish_nonps(fp, isHTML = 0):
 	'''
@@ -220,3 +221,39 @@ def format_line(str):
         newstr = newstr + str[start : ]
         return newstr
  
+def create_accession_anchor(id):
+	'''
+	# requires:  id, the accession id for the anchor
+	#
+	# effects:
+	# constructs an HTML anchor string to the public WI accession CGI using
+	# the given id
+	#
+	# returns:
+	# a formatted HTML anchor
+	#
+	# note:
+	# close the anchor using close_accession_anchor()
+	#
+	'''
+
+	anchor = '<A HREF="http://www.informatics.jax.org/searches/accession_report.cgi?id=%s">' % (id)
+	return anchor
+
+def close_accession_anchor():
+	'''
+	# requires:  nothing
+	#
+	# effects:
+	# constructs an closing HTML anchor string
+	#
+	# returns:
+	# a closing HTML anchor
+	#
+	# note:
+	# create the anchor using create_accession_anchor()
+	#
+	'''
+
+	return '</A>'
+
