@@ -40,6 +40,7 @@ import string
 import posix
 import os
 import mgi_utils
+import db
 
 TAB = '\t'
 CRT = '\n'
@@ -117,8 +118,9 @@ The Jackson Laboratory - Mouse Genome Informatics - Mouse Genome Database (MGD)
 Copyright 1996, 1999, 2002 The Jackson Laboratory
 All Rights Reserved
 Date Generated:  %s
+(SERVER=%s;DATABASE=%)
 
-''' % (mgi_utils.date())
+''' % (mgi_utils.date(), db.get_sqlServer(), db.get_sqlDatabase())
 )
 
 def trailer(fp):
