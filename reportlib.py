@@ -118,7 +118,7 @@ The Jackson Laboratory - Mouse Genome Informatics - Mouse Genome Database (MGD)
 Copyright 1996, 1999, 2002 The Jackson Laboratory
 All Rights Reserved
 Date Generated:  %s
-(SERVER=%s;DATABASE=%)
+(SERVER=%s;DATABASE=%s)
 
 ''' % (mgi_utils.date(), db.get_sqlServer(), db.get_sqlDatabase())
 )
