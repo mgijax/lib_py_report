@@ -1,7 +1,6 @@
 #!/bin/csh
 #
 # Installs all .py files under the specified directory
-# and sets appropriate permissions.
 
 setenv INSTDIR	$1
 
