@@ -104,7 +104,7 @@ def header(fp):
 	fp.write(
 '''
 The Jackson Laboratory - Mouse Genome Informatics - Mouse Genome Database (MGD)
-Copyright 1996, 1999, 2000 The Jackson Laboratory
+Copyright 1996, 1999, 2002 The Jackson Laboratory
 All Rights Reserved
 Date Generated:  %s
 
@@ -135,7 +135,7 @@ and educational purposes.  Any reproduction or use for commercial purpose
 is prohibited without the prior express written permission of the Jackson 
 Laboratory.
 
-Copyright © 1996, 1999, 2000 by The Jackson Laboratory
+Copyright © 1996, 1999, 2002 by The Jackson Laboratory
 '''
 )
 
