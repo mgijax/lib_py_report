@@ -37,7 +37,6 @@ import posix
 import os
 import db
 import mgi_utils
-import accessionlib
 
 TAB = '\t'
 CRT = '\n'
@@ -219,84 +218,4 @@ def format_line(str):
  
         newstr = newstr + str[start : ]
         return newstr
- 
-def process_ref(fp, command, whichFormat = 1):
-	'''
-	# requires: fp, the output file descriptor
-	#	    command, the SQL command to execute (string)
-	#		This command is expected to return the _Refs_key
-	#		of each returned record.  Other columns may be
-	#		returned, but _Refs_key MUST be returned.
-	#	    whichFormat, the format to use (1,2,3)
-	#	    1 prints author, citation, title, jnum, UI, datasets
-	#	    2 prints author, title, citation, jnum, datasets
-	#	    3 prints author, title, citation, jnum, datasets plus abstract
-	#
-	# effects:
-	# 1. Executes the SQL command and writes the results
-	#    to the output file specified.
-	#
-	# returns:
-	#
-	'''
-
-	row = 1
-
-	# At a minimum, the command must return a list of _Refs_keys
-	results = db.sql(command, 'auto')
-
-	for result in results:
-		command = 'select * from BIB_All_View where _Refs_key = %d' % result['_Refs_key']
-		references = db.sql(command, 'auto')
-
-		for ref in references:	# Should be only one
-
-       			authors = `row` + DOT + TAB + mgi_utils.prvalue(ref['authors']) + SEP + CRT
-
-        		if len(authors) > column_width:
-                		authors = format_line(authors)
- 
-        		title = TAB + mgi_utils.prvalue(ref['title']) + CRT
- 
-        		if len(title) > column_width:
-                		title = format_line(title)
- 
-        		citation = TAB + mgi_utils.prvalue(ref['citation']) + CRT
-       			jnum = TAB + mgi_utils.prvalue(ref['jnumID']) + CRT
-       			dbs = TAB + mgi_utils.prvalue(ref['dbs']) + CRT
-
-			ui = accessionlib.get_accID(ref['_Refs_key'], "Reference", "Medline")
-
-			if ui is None:
-				ui = ''
-			else:
-				ui = TAB + ui + CRT
-
-			if whichFormat == '1':
-				fp.write(authors + citation + title + jnum + ui + dbs + CRT)
-			else:
-				fp.write(authors + title + citation + jnum + dbs + CRT)
-		
-        		cmd = 'select note from BIB_Notes where _Refs_key = %d order by sequenceNum' % ref['_Refs_key']
-        		notes = db.sql(cmd, 'auto')
-
-			for note in notes:
-				n = TAB + note['note']
-				if len(n) > column_width:
-					n = format_line(n)
-
-				fp.write(n + CRT + CRT)
-
-			if whichFormat == '3':
-        			cmd = 'select abstract from BIB_Refs where _Refs_key = %d' % ref['_Refs_key']
-				abstract = db.sql(cmd, 'auto')
-
-				for abs in abstract:
-					a = TAB + mgi_utils.prvalue(abs['abstract'])
-					if len(a) > column_width:
-						a = format_line(a)
-
-					fp.write(a + CRT + CRT)
- 
-        		row = row + 1
  
