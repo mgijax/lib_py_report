@@ -36,7 +36,6 @@ import sys
 import string
 import posix
 import os
-import db
 import mgi_utils
 
 TAB = '\t'
