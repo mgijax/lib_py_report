@@ -1,3 +1,9 @@
+TAG: lib_py_report-3-0-0
+DATE: 04/14/2003
+STAFF: lec
+RELEASE: A
+CHANGES: append .html to fileExt
+
 TAG: lib_py_report-2-0-1
 DATE: 04/24/2002
 STAFF: lec
