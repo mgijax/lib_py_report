@@ -1,3 +1,9 @@
+TAG: lib_py_report-1-0-5
+DATE: 05/03/2000
+STAFF: lec
+RELEASE: A
+CHANGES: created close_accession_anchor and create_accession_anchor
+
 TAG: lib_py_report-1-0-4
 DATE: 04/24/2000
 STAFF: lec
