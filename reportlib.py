@@ -52,7 +52,14 @@ ULINE = '_'
 
 column_width = 76	# Maximum column width
  
-def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 0, fileExt = None):
+def init(outputfile, 
+	 title = None, 
+	 outputdir = None, 
+	 printHeading = 1, 
+	 isHTML = 0, 
+	 fileExt = None, 
+	 sqlOneConnection = 1,
+	 sqlLogging = 1):
 	'''
 	# requires: outputfile, the name of the output file (string)
 	#           title, the title of the report (string)
@@ -103,6 +110,12 @@ def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 
 
 		if title is not None:
 			fp.write(string.center(title, column_width) + 2 * CRT)
+
+	if sqlOneConnection:
+		db.useOneConnection(1)
+
+	if sqlLogging:
+		db.set_sqlLogFunction(db.sqlLogAll)
 
 	return fp
 
@@ -168,6 +181,7 @@ def finish_nonps(fp, isHTML = 0):
 		fp.write("</HTML>")
 
 	fp.close()
+	db.useOneConnection(0)
  
 def finish_ps(fp, banner = None, options = None):
 	'''
@@ -200,6 +214,7 @@ def finish_ps(fp, banner = None, options = None):
         p = posix.popen(cmd, 'r')
         s = p.read()
         p.close()
+	db.useOneConnection(0)
 
 def format_line(str):
 	'''
