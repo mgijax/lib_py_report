@@ -73,7 +73,7 @@ def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 
 	outputfile = os.path.splitext(outputfile)
 
 	if outputdir is None:
-		outputdir = os.environ['HOME']
+		outputdir = os.getcwd()
 
 	filename = outputdir + '/' + outputfile[0] + suffix
 
