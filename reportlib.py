@@ -9,6 +9,9 @@
 #
 # History:
 #
+#       lec     04/24/2002
+#	- added fileExt to init()
+#
 #       lec     04/03/2000
 #	- convert to mgi_utils, db from mgdlib
 #	- remove accessionlib
@@ -48,7 +51,7 @@ ULINE = '_'
 
 column_width = 76	# Maximum column width
  
-def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 0):
+def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 0, fileExt = None):
 	'''
 	# requires: outputfile, the name of the output file (string)
 	#           title, the title of the report (string)
@@ -57,6 +60,7 @@ def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 
 	#	    printHeading, set to 1 if the header is to be printed (default is 1)
 	#	    isHTML, set to 1 if the output file is HTML format, 0 otherwise
 	#		(default is 0)
+	#           fileExt, the file extension of the output file (e.g. ".rpt", ".tab")
 	#
 	# effects:
 	# 1. Opens the output file under $HOME/mgireport directory for writing
@@ -69,6 +73,8 @@ def init(outputfile, title = None, outputdir = None, printHeading = 1, isHTML = 
 
 	if isHTML:
 		suffix = '.html'
+	elif fileExt != None:
+		suffix = fileExt
 	else:
 		suffix = '.rpt'
 
