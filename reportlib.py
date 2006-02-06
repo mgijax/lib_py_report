@@ -299,6 +299,6 @@ def create_imsrstrain_anchor(strain):
 	#
 	'''
 
-	anchor = '<A HREF="http://www.informatics.jax.org//imsr/fetch?page=imsrSummary&selectedQuery=Strains&query=%s">' % (id)
+	anchor = '<A HREF="http://www.informatics.jax.org//imsr/fetch?page=imsrSummary&selectedQuery=Strains&query=%s">' % (strain)
 	return anchor
 
