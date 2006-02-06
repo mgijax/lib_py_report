@@ -277,9 +277,28 @@ def close_accession_anchor():
 	# a closing HTML anchor
 	#
 	# note:
-	# create the anchor using create_accession_anchor()
+	# create the anchor using create_accession_anchor(), create_imsrstrain_anchor
 	#
 	'''
 
 	return '</A>'
+
+def create_imsrstrain_anchor(strain):
+	'''
+	# requires:  strain, the imsr strain for the anchor
+	#
+	# effects:
+	# constructs an HTML anchor string to the public IMSR WI Strain Query using
+	# the given string
+	#
+	# returns:
+	# a formatted HTML anchor
+	#
+	# note:
+	# close the anchor using close_imsrstrain_anchor()
+	#
+	'''
+
+	anchor = '<A HREF="http://www.informatics.jax.org//imsr/fetch?page=imsrSummary&selectedQuery=Strains&query=%s">' % (id)
+	return anchor
 
