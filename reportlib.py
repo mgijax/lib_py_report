@@ -9,6 +9,9 @@
 #
 # History:
 #
+#	lec	10/06/2006
+#	- TR 7943; change report headings; remove trailer
+#
 #       lec     04/24/2002
 #	- added fileExt to init()
 #
@@ -55,7 +58,7 @@ column_width = 76	# Maximum column width
 def init(outputfile, 
 	 title = None, 
 	 outputdir = None, 
-	 printHeading = 1, 
+	 printHeading = 'JAX', 
 	 isHTML = 0, 
 	 fileExt = None, 
 	 sqlOneConnection = 1,
@@ -65,7 +68,7 @@ def init(outputfile,
 	#           title, the title of the report (string)
 	#	    outputdir, the directory in which to place the output file (string);
 	#	      the default is the current working directory
-	#	    printHeading, set to 1 if the header is to be printed (default is 1)
+	#	    printHeading, set to Header Type if the header is to be printed (default is JAX)
 	#	    isHTML, set to 1 if the output file is HTML format, 0 otherwise
 	#		(default is 0)
 	#           fileExt, the file extension of the output file (e.g. ".rpt", ".tab")
@@ -105,8 +108,8 @@ def init(outputfile,
 		fp.write("<PRE>")
 		# see finish_nonps for closing of these markups
 
-	if printHeading:
-		header(fp)
+	if printHeading is not None:
+		header(fp, printHeading)
 
 		if title is not None:
 			fp.write(string.center(title, column_width) + 2 * CRT)
@@ -119,22 +122,43 @@ def init(outputfile,
 
 	return fp
 
-def header(fp):
+def header(fp, headerType = "JAX"):
 	'''
 	# requires: fp, output file descriptor pointing to an open file
-	# effects: writes the standard MGI header to the file
+	#	headerType, string that denotes which header to use
+	# effects: writes the specified header to the file
 	'''
 
-	fp.write(
-'''
-The Jackson Laboratory - Mouse Genome Informatics - Mouse Genome Database (MGD)
-Copyright 1996, 1999, 2002 The Jackson Laboratory
-All Rights Reserved
-Date Generated:  %s
-(SERVER=%s;DATABASE=%s)
+	TEXTDIR = os.environ['MGI_DBUTILS'] + '/text/'
 
-''' % (mgi_utils.date(), db.get_sqlServer(), db.get_sqlDatabase())
-)
+	jaxheaderfile = TEXTDIR + 'jax_header'
+
+	if headerType == 'MGI':
+	    mgiheaderfile = TEXTDIR + 'mgi_header'
+	elif headerType == 'MGD':
+	    mgiheaderfile = TEXTDIR + 'mgd_header'
+	elif headerType == 'GXD':
+	    mgiheaderfile = TEXTDIR + 'gxd_header'
+	else:
+	    mgiheaderfile = ''
+
+	#
+	# always write the JAX header
+	#
+
+	jaxheaderfp = open(jaxheaderfile, 'r')
+	for l in jaxheaderfp.readlines():
+	    fp.write(l)
+        fp.write('Date Generated: %s\n\n' % (mgi_utils.date()))
+
+	#
+	# specific header only if specified
+	#
+
+	if len(mgiheaderfile) > 0:
+	    mgiheaderfp = open(mgiheaderfile, 'r')
+	    for l in mgiheaderfp.readlines():
+	        fp.write(l)
 
 def trailer(fp):
 	'''
@@ -142,27 +166,13 @@ def trailer(fp):
 	# effects: writes the standard MGI warantee trailer to the output file
 	# notes: call this function just before closing. The trailers
 	#  should be placed last in the file.
+	#
+	# obsolete as of TR7943; 
+	# remove this entirely once all references to it are removed
+	#
 	'''
 
-	fp.write(
-'''
-WARRANTY DISCLAIMER AND COPYRIGHT NOTICE
-THE JACKSON LABORATORY MAKES NO REPRESENTATION ABOUT THE SUITABILITY OR 
-ACCURACY OF THIS SOFTWARE OR DATA FOR ANY PURPOSE, AND MAKES NO WARRANTIES, 
-EITHER EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY AND FITNESS FOR A 
-PARTICULAR PURPOSE OR THAT THE USE OF THIS SOFTWARE OR DATA WILL NOT 
-INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS, OR OTHER RIGHTS.  
-THE SOFTWARE AND DATA ARE PROVIDED "AS IS".
-
-This software and data are provided to enhance knowledge and encourage 
-progress in the scientific community and are to be used only for research 
-and educational purposes.  Any reproduction or use for commercial purpose 
-is prohibited without the prior express written permission of the Jackson 
-Laboratory.
-
-Copyright © 1996, 1999, 2002 by The Jackson Laboratory
-'''
-)
+	return
 
 def finish_nonps(fp, isHTML = 0):
 	'''
