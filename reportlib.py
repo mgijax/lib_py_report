@@ -149,7 +149,7 @@ def header(fp, headerType = "JAX"):
 	jaxheaderfp = open(jaxheaderfile, 'r')
 	for l in jaxheaderfp.readlines():
 	    fp.write(l)
-        fp.write('Date Generated: %s\n\n' % (mgi_utils.date()))
+        fp.write('# Date Generated: %s\n#\n' % (mgi_utils.date()))
 
 	#
 	# specific header only if specified
