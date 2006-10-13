@@ -149,7 +149,16 @@ def header(fp, headerType = "JAX"):
 	jaxheaderfp = open(jaxheaderfile, 'r')
 	for l in jaxheaderfp.readlines():
 	    fp.write(l)
-        fp.write('# Date Generated: %s\n#\n' % (mgi_utils.date()))
+        fp.write('# Date Generated: %s\n' % (mgi_utils.date()))
+
+	#
+	# special case
+	#
+
+	if headerType == 'DBINFO':
+	    fp.write('# (server = %s, database = %s)\n#\n\n' % (db.get_sqlServer(), db.get_sqlDatabase()))
+        else:
+	    fp.write('#\n\n')
 
 	#
 	# specific header only if specified
