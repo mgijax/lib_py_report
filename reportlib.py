@@ -169,20 +169,6 @@ def header(fp, headerType = "JAX"):
 	    for l in mgiheaderfp.readlines():
 	        fp.write(l)
 
-def trailer(fp):
-	'''
-	# requires: fp, output file descriptor pointing to an open file
-	# effects: writes the standard MGI warantee trailer to the output file
-	# notes: call this function just before closing. The trailers
-	#  should be placed last in the file.
-	#
-	# obsolete as of TR7943; 
-	# remove this entirely once all references to it are removed
-	#
-	'''
-
-	return
-
 def finish_nonps(fp, isHTML = 0):
 	'''
 	# requires: fp, the output file descriptor
