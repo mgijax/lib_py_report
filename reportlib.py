@@ -9,6 +9,9 @@
 #
 # History:
 #
+#	lec	10/25/2007
+#	- TR 8557; create_accession_anchor/isANCHOR
+#
 #	lec	10/06/2006
 #	- TR 7943; change report headings; remove trailer
 #
@@ -252,9 +255,12 @@ def format_line(str):
         newstr = newstr + str[start : ]
         return newstr
  
-def create_accession_anchor(id):
+def create_accession_anchor(id, isANCHOR = 1):
 	'''
 	# requires:  id, the accession id for the anchor
+	#            isANCHOR, set to 1 if the public database is to be used as the anchor
+	#                     (default is 1)
+	#                      set to 2 for the production database
 	#
 	# effects:
 	# constructs an HTML anchor string to the public WI accession CGI using
@@ -268,7 +274,10 @@ def create_accession_anchor(id):
 	#
 	'''
 
-	anchor = '<A HREF="http://www.informatics.jax.org/searches/accession_report.cgi?id=%s">' % (id)
+	if isANCHOR == 1:
+	    anchor = '<A HREF="http://www.informatics.jax.org/searches/accession_report.cgi?id=%s">' % (id)
+	elif isANCHOR == 2:
+	    anchor = '<A HREF="http://prodwww.informatics.jax.org/usrlocalmgi/live/wi/www/searches/accession_report.cgi?id=%s">' % (id)
 	return anchor
 
 def close_accession_anchor():
