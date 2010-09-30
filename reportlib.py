@@ -138,10 +138,6 @@ def header(fp, headerType = "JAX"):
 
 	if headerType == 'MGI':
 	    mgiheaderfile = TEXTDIR + 'mgi_header'
-	elif headerType == 'MGD':
-	    mgiheaderfile = TEXTDIR + 'mgd_header'
-	elif headerType == 'GXD':
-	    mgiheaderfile = TEXTDIR + 'gxd_header'
 	else:
 	    mgiheaderfile = ''
 
