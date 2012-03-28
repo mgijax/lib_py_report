@@ -9,6 +9,12 @@
 #
 # History:
 #
+#	lec	03/28/2012
+#	- TR11027
+#	- create_imsrstrain_anchor
+#	- create_accession_anchor
+#	- use env variable 'WI_URL' when possible
+#
 #	lec	10/25/2007
 #	- TR 8557; create_accession_anchor/isANCHOR
 #
@@ -251,9 +257,10 @@ def format_line(str):
         newstr = newstr + str[start : ]
         return newstr
  
-def create_accession_anchor(id, isANCHOR = 1):
+def create_accession_anchor(id, accType = None, isANCHOR = 1):
 	'''
 	# requires:  id, the accession id for the anchor
+	#            accType, type of accession id ('marker', 'reference') for MGI 5.0
 	#            isANCHOR, set to 1 if the public database is to be used as the anchor
 	#                     (default is 1)
 	#                      set to 2 for the production database
@@ -270,10 +277,24 @@ def create_accession_anchor(id, isANCHOR = 1):
 	#
 	'''
 
-	if isANCHOR == 1:
-	    anchor = '<A HREF="http://www.informatics.jax.org/searches/accession_report.cgi?id=%s">' % (id)
-	elif isANCHOR == 2:
-	    anchor = '<A HREF="http://prodwww.informatics.jax.org/usrlocalmgi/live/wi/www/searches/accession_report.cgi?id=%s">' % (id)
+	url = os.environ['WI_URL']
+
+	#
+	# MGI 5.0/fiwi
+	#
+	if accType in ('marker', 'reference'):
+	    anchor = '<A HREF="%s%s/%s">' % (url, accType, id)
+
+	#
+	# Python/Java WI
+	#
+	else:
+	    if isANCHOR == 1:
+	        anchor = '<A HREF="%ssearches/accession_report.cgi?id=%s">' % (url, id)
+
+	    elif isANCHOR == 2:
+	        anchor = '<A HREF="$susrlocalmgi/live/wi/www/searches/accession_report.cgi?id=%s">' % (url, id)
+
 	return anchor
 
 def close_accession_anchor():
@@ -309,6 +330,12 @@ def create_imsrstrain_anchor(strain):
 	#
 	'''
 
-	anchor = '<A HREF="http://www.informatics.jax.org//imsr/fetch?page=imsrSummary&selectedQuery=Strains&query=%s">' % (strain)
+	serverName = os.environ['SERVER_NAME']
+
+	if serverName == 'lindon':
+	    anchor = '<A HREF="http://www.findmice.org/summary?query=%22' + strain + '%22">'
+	else:
+	    anchor = '<A HREF="http://cardolan.informatics.jax.org:48080/imsrwi/imsrwi/summary?query=%22' + strain + '%22">'
+
 	return anchor
 

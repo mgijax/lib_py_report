@@ -1,3 +1,11 @@
+TAG:  lib_py_report-5-0-0-1
+DATE: 03/28/2012
+STAFF: lec
+CHANGES:
+1) TR11027; changes for MGI 5.0
+create_accession_anchor
+create_imsrstrain_anchor
+
 TAG:  lib_py_report-3-5-1-5
 DATE: 10/25/2007
 STAFF: lec
