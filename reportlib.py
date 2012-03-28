@@ -257,13 +257,10 @@ def format_line(str):
         newstr = newstr + str[start : ]
         return newstr
  
-def create_accession_anchor(id, accType = None, isANCHOR = 1):
+def create_accession_anchor(id, accType = None):
 	'''
 	# requires:  id, the accession id for the anchor
 	#            accType, type of accession id ('marker', 'reference') for MGI 5.0
-	#            isANCHOR, set to 1 if the public database is to be used as the anchor
-	#                     (default is 1)
-	#                      set to 2 for the production database
 	#
 	# effects:
 	# constructs an HTML anchor string to the public WI accession CGI using
@@ -277,23 +274,26 @@ def create_accession_anchor(id, accType = None, isANCHOR = 1):
 	#
 	'''
 
+	serverName = os.environ['SERVER_NAME']
 	url = os.environ['WI_URL']
 
 	#
-	# MGI 5.0/fiwi
+	# MGI 5.0/fewi
 	#
 	if accType in ('marker', 'reference'):
 	    anchor = '<A HREF="%s%s/%s">' % (url, accType, id)
 
 	#
-	# Python/Java WI
+	# lindon
+	#
+	elif serverName == 'lindon':
+	    anchor = '<A HREF="$susrlocalmgi/live/wi/www/searches/accession_report.cgi?id=%s">' % (url, id)
+
+	#
+	# non-fewi (python/java wi)
 	#
 	else:
-	    if isANCHOR == 1:
-	        anchor = '<A HREF="%ssearches/accession_report.cgi?id=%s">' % (url, id)
-
-	    elif isANCHOR == 2:
-	        anchor = '<A HREF="$susrlocalmgi/live/wi/www/searches/accession_report.cgi?id=%s">' % (url, id)
+	    anchor = '<A HREF="%ssearches/accession_report.cgi?id=%s">' % (url, id)
 
 	return anchor
 
