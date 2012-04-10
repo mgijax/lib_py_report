@@ -52,7 +52,17 @@ import string
 import posix
 import os
 import mgi_utils
-import db
+
+try:
+    if os.environ['DB_TYPE'] == 'postgres':
+        import pg_db
+        db = pg_db
+        db.setTrace()
+	db.setAutoTranslateBE()
+    else:
+        import db
+except:
+    import db
 
 TAB = '\t'
 CRT = '\n'
@@ -126,8 +136,9 @@ def init(outputfile,
 	if sqlOneConnection:
 		db.useOneConnection(1)
 
-	if sqlLogging:
-		db.set_sqlLogFunction(db.sqlLogAll)
+        if os.environ['DB_TYPE'] == 'sybase':
+		if sqlLogging:
+			db.set_sqlLogFunction(db.sqlLogAll)
 
 	return fp
 
@@ -284,16 +295,12 @@ def create_accession_anchor(id, accType = None):
 	    anchor = '<A HREF="%s%s/%s">' % (url, accType, id)
 
 	#
-	# lindon
-	#
-	elif serverName == 'lindon':
-	    anchor = '<A HREF="$susrlocalmgi/live/wi/www/searches/accession_report.cgi?id=%s">' % (url, id)
-
-	#
 	# non-fewi (python/java wi)
 	#
 	else:
 	    anchor = '<A HREF="%ssearches/accession_report.cgi?id=%s">' % (url, id)
+
+	    anchor = '<A HREF="$susrlocalmgi/live/wi/www/searches/accession_report.cgi?id=%s">' % (url, id)
 
 	return anchor
 
