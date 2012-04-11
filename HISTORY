@@ -1,3 +1,12 @@
+TAG:  lib_py_report-5-0-0-3
+DATE: 04/11/2012
+STAFF: lec
+CHANGES:
+1) TR11027; changes for MGI 5.0: fix
+create_accession_anchor
+create_imsrstrain_anchor
+2) postgres options added
+
 TAG:  lib_py_report-5-0-0-2
 TAG:  lib_py_report-5-0-0-1
 DATE: 03/28/2012

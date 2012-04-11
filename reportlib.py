@@ -9,6 +9,9 @@
 #
 # History:
 #
+#	lec	04/11/2012
+#	- postgres options added
+#
 #	lec	03/28/2012
 #	- TR11027
 #	- create_imsrstrain_anchor
@@ -136,7 +139,11 @@ def init(outputfile,
 	if sqlOneConnection:
 		db.useOneConnection(1)
 
-        if os.environ['DB_TYPE'] == 'sybase':
+	try:
+        	if os.environ['DB_TYPE'] == 'sybase':
+			if sqlLogging:
+				db.set_sqlLogFunction(db.sqlLogAll)
+	except:
 		if sqlLogging:
 			db.set_sqlLogFunction(db.sqlLogAll)
 
@@ -300,7 +307,7 @@ def create_accession_anchor(id, accType = None):
 	else:
 	    anchor = '<A HREF="%ssearches/accession_report.cgi?id=%s">' % (url, id)
 
-	    anchor = '<A HREF="$susrlocalmgi/live/wi/www/searches/accession_report.cgi?id=%s">' % (url, id)
+	    anchor = '<A HREF="%susrlocalmgi/live/wi/www/searches/accession_report.cgi?id=%s">' % (url, id)
 
 	return anchor
 
