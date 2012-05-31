@@ -9,6 +9,9 @@
 #
 # History:
 #
+#	lec	05/31/2012
+#	- TR11093/create_accession_anchor/use new flavor of accession link
+#
 #	lec	04/11/2012
 #	- postgres options added
 #
@@ -305,9 +308,7 @@ def create_accession_anchor(id, accType = None):
 	# non-fewi (python/java wi)
 	#
 	else:
-	    anchor = '<A HREF="%ssearches/accession_report.cgi?id=%s">' % (url, id)
-
-	    anchor = '<A HREF="%susrlocalmgi/live/wi/www/searches/accession_report.cgi?id=%s">' % (url, id)
+	    anchor = '<A HREF="%saccession/%s">' % (url, id)
 
 	return anchor
 
