@@ -335,8 +335,8 @@ def create_imsrstrain_anchor(strain):
 	# requires:  strain, the imsr strain for the anchor
 	#
 	# effects:
-	# constructs an HTML anchor string to the public IMSR WI Strain Query using
-	# the given string
+	# constructs an HTML anchor string to the public IMSR Strain Query
+	# using the given string
 	#
 	# returns:
 	# a formatted HTML anchor
@@ -346,12 +346,7 @@ def create_imsrstrain_anchor(strain):
 	#
 	'''
 
-	serverName = os.environ['SERVER_NAME']
-
-	if serverName == 'lindon':
-	    anchor = '<A HREF="http://www.findmice.org/summary?query=%22' + strain + '%22">'
-	else:
-	    anchor = '<A HREF="http://cardolan.informatics.jax.org:48080/imsrwi/imsrwi/summary?query=%22' + strain + '%22">'
+	anchor = '<A HREF="http://www.findmice.org/summary?query=%22' + strain + '%22">'
 
 	return anchor
 
