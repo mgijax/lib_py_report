@@ -58,26 +58,10 @@ import string
 import posix
 import os
 import mgi_utils
+import db
 
-try:
-    if os.environ['DB_TYPE'] == 'postgres':
-        import pg_db
-        db = pg_db
-        #db.setTrace()
-	#db.setAutoTranslate()
-	db.setAutoTranslateBE()
-    else:
-        import db
-except:
-    import db
-
-TAB = '\t'
-CRT = '\n'
-SEP = ', '
-DOT = '.   '
-SPACE = ' '
-PAGE = ''
-ULINE = '_'
+#db.setTrace()
+db.setAutoTranslateBE()
 
 column_width = 76	# Maximum column width
  
@@ -138,7 +122,7 @@ def init(outputfile,
 		header(fp, printHeading)
 
 		if title is not None:
-			fp.write(string.center(title, column_width) + 2 * CRT)
+			fp.write(string.center(title, column_width) + '\n\n')
 
 	if sqlOneConnection:
 		db.useOneConnection(1)
@@ -160,14 +144,8 @@ def header(fp, headerType = "JAX"):
 	# effects: writes the specified header to the file
 	'''
 
-	TEXTDIR = os.environ['MGI_DBUTILS'] + '/text/'
+	jaxheaderfile = '# The Jackson Laboratory - Mouse Genome Informatics (MGI)\n# Copyright 1996, 1999, 2002, 2005, 2008 The Jackson Laboratory\n# All Rights Reserved\n'
 
-	jaxheaderfile = TEXTDIR + 'jax_header'
-
-	if headerType == 'MGI':
-	    mgiheaderfile = TEXTDIR + 'mgi_header'
-	else:
-	    mgiheaderfile = ''
 
 	#
 	# always write the JAX header
@@ -182,19 +160,10 @@ def header(fp, headerType = "JAX"):
 	# special case
 	#
 
-	if headerType == 'DBINFO':
-	    fp.write('# (server = %s, database = %s)\n#\n\n' % (db.get_sqlServer(), db.get_sqlDatabase()))
-        else:
+	if headerType == 'JAX':
 	    fp.write('#\n\n')
-
-	#
-	# specific header only if specified
-	#
-
-	if len(mgiheaderfile) > 0:
-	    mgiheaderfp = open(mgiheaderfile, 'r')
-	    for l in mgiheaderfp.readlines():
-	        fp.write(l)
+        else:
+	    fp.write('# (server = %s, database = %s)\n#\n\n' % (db.get_sqlServer(), db.get_sqlDatabase()))
 
 def finish_nonps(fp, isHTML = 0):
 	'''
