@@ -167,7 +167,7 @@ def header(fp, headerType = "JAX"):
 	#
 
 	if headerType == 'JAX':
-	    fp.write('#\n\n')
+	    fp.write('#\n')
         else:
 	    fp.write('# (server = %s, database = %s)\n#\n\n' % (db.get_sqlServer(), db.get_sqlDatabase()))
 
