@@ -58,20 +58,21 @@ import string
 import posix
 import os
 import mgi_utils
-import db
 
-#db.setTrace()
+import pg_db
+db = pg_db
 db.setAutoTranslateBE()
 
-column_width = 76	# Maximum column width
- 
 TAB = '\t'
 CRT = '\n'
 SEP = ', '
 DOT = '.   '
 SPACE = ' '
-PAGE = '^L'
+PAGE = ''
+ULINE = '_'
 
+column_width = 76	# Maximum column width
+ 
 def init(outputfile, 
 	 title = None, 
 	 outputdir = None, 
@@ -129,7 +130,7 @@ def init(outputfile,
 		header(fp, printHeading)
 
 		if title is not None:
-			fp.write(string.center(title, column_width) + '\n\n')
+			fp.write(string.center(title, column_width) + 2 * CRT)
 
 	if sqlOneConnection:
 		db.useOneConnection(1)
@@ -158,9 +159,7 @@ def header(fp, headerType = "JAX"):
 	# always write the JAX header
 	#
 
-	jaxheaderfp = open(jaxheaderfile, 'r')
-	for l in jaxheaderfp.readlines():
-	    fp.write(l)
+        fp.write(jaxheaderfile)
         fp.write('# Date Generated: %s\n' % (mgi_utils.date()))
 
 	#
