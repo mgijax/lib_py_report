@@ -65,6 +65,13 @@ db.setAutoTranslateBE()
 
 column_width = 76	# Maximum column width
  
+TAB = '\t'
+CRT = '\n'
+SEP = ', '
+DOT = '.   '
+SPACE = ' '
+PAGE = '^L'
+
 def init(outputfile, 
 	 title = None, 
 	 outputdir = None, 
