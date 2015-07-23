@@ -58,10 +58,7 @@ import string
 import posix
 import os
 import mgi_utils
-
-import pg_db
-db = pg_db
-db.setAutoTranslateBE()
+import db
 
 TAB = '\t'
 CRT = '\n'
