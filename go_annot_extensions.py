@@ -40,7 +40,7 @@ _EVIDENCE_VOCAB_NAME = 'GO Evidence Codes'
 
 ### Public classes and functions ###
 
-class Processor():
+class Processor(object):
 	"""
 	Processes annotation extension data
 	"""
