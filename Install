@@ -22,6 +22,20 @@ cd `dirname $0`
 #
 . ./Configuration
 
+
+#
+# Run unit tests
+#
+cd unittest
+./all_tests.sh 
+if [ $? -ne 0 ]
+then
+    echo "Unit tests failed"
+    exit 1
+fi
+cd ..
+
+
 #
 # Verify the arguments to the script.
 #
