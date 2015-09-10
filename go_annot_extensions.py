@@ -71,7 +71,7 @@ class Processor(object):
 
 		results = db.sql(cmd, 'auto')
 
-		sanctionedTermKeys = [c[0] for c in results]
+		sanctionedTermKeys = [c['_term_key'] for c in results]
 		return sanctionedTermKeys
 
 	def querySanctionedEvidenceTermKeys(self):
@@ -88,6 +88,11 @@ class Processor(object):
 		where v.name = '%s'
 			and t.abbreviation not in ('%s')
 		''' % ( self.evidenceVocabName, "','".join(self.excludedEvidenceCodes) )
+
+		results = db.sql(cmd, 'auto')
+
+		sanctionedTermKeys = [c['_term_key'] for c in results]
+		return sanctionedTermKeys
 
 	def processValue(self, value):
 		"""
