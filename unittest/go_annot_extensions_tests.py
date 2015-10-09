@@ -54,6 +54,19 @@ class AnnotationExtensionProcessorTest(unittest.TestCase):
 		expected = 'MA:1234'
 		self.assertEquals(expected, self.processor.processValue(value))
 
+	def test_emapaid(self):
+		value = 'EMAPA:123456'
+		expected = 'EMAPA:123456'
+		self.assertEquals(expected, self.processor.processValue(value))
+
+	def test_emapaid_with_stage(self):
+		"""
+		theiler stage gets stripped
+		"""
+		value = 'EMAPA:123456 TS12'
+		expected = 'EMAPA:123456'
+		self.assertEquals(expected, self.processor.processValue(value))
+
 
 	### Complex cases ###
 

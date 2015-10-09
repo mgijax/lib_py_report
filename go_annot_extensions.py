@@ -112,5 +112,9 @@ class Processor(object):
 		idValue = parts[-1]
 		idValue = idValue.strip()
 
+		# remove TS from EMAPA values
+		if idValue.startswith('EMAPA:'):
+			idValue = idValue.split(' ')[0]
+
 		return idValue
 
