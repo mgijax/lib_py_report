@@ -35,22 +35,7 @@ class Processor(object):
 
 		self.includedTerms = _INCLUDED_TERMS
 		self.propertyVocabName = _PROPERTY_VOCAB_NAME
-
-
 		self.whitespacePattern = re.compile(r'([^\s\\\n]*)', re.I)
-
-		# only these patterns are valid for isoform values
-		# 	in the voc_evidence_property table
-		self.validIsoformPatterns = [
-			re.compile(r'UniProtKB:', re.I),
-			re.compile(r'protein_id', re.I),
-    			re.compile(r'NCBI:NP_', re.I),
-    			re.compile(r'NCBI:XP_', re.I),
-    			re.compile(r'PR:', re.I)	
-		]
-		
-		
-
 
 	def querySanctionedPropertyTermKeys(self):
 		"""
@@ -92,21 +77,15 @@ class Processor(object):
 		    if not token:
 			continue
 
+		    if token in seen:
+			continue
 
-		    # only keep valid values
-		    for pattern in self.validIsoformPatterns:
-			
-			if pattern.match(token):
+		    seen.add(token)
 
-			    if token in seen:
-				continue
-			    seen.add(token)
-
-
-			    # replace NCBI with RefSeq
-			    token = token.replace('NCBI:', 'RefSeq:')
+		    # replace NCBI with RefSeq
+		    token = token.replace('NCBI:', 'RefSeq:')
 		    
-			    isoforms.append(token)
+		    isoforms.append(token)
 
 		return isoforms
 

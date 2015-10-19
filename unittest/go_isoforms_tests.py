@@ -29,9 +29,9 @@ class IsoformProcessorTest(unittest.TestCase):
 		expected = []
 		self.assertEquals(expected, self.processor.processValue(value))
 
-	def test_invalid_text(self):
+	def test_unknown_value(self):
 		value = 'testing'
-		expected = []
+		expected = ['testing']
 		self.assertEquals(expected, self.processor.processValue(value))
 
 	def test_UniProtKB(self):
@@ -74,11 +74,6 @@ class IsoformProcessorTest(unittest.TestCase):
 	def test_multiple_different_ids(self):
 		value = 'PR:001 UniProtKB:002 protein_id:003'
 		expected = ['PR:001','UniProtKB:002','protein_id:003']
-		self.assertEquals(expected, self.processor.processValue(value))
-
-	def test_multiple_some_invalid(self):
-		value = 'FAKE:001 UniProtKB:002 FAKE:003'
-		expected = ['UniProtKB:002']
 		self.assertEquals(expected, self.processor.processValue(value))
 
 	def test_duplicates(self):
