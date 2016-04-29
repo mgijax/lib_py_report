@@ -13,6 +13,9 @@
 
 import db
 
+db.setAutoTranslate(False)
+db.setAutoTranslateBE(False)
+
 ### Private Constants ###
 
 # Property terms we don't use for annotation extensions
@@ -117,4 +120,4 @@ class Processor(object):
 			idValue = idValue.split(' ')[0]
 
 		return idValue
-
+ 

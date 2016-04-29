@@ -132,13 +132,8 @@ def init(outputfile,
 	if sqlOneConnection:
 		db.useOneConnection(1)
 
-	try:
-        	if os.environ['DB_TYPE'] == 'sybase':
-			if sqlLogging:
-				db.set_sqlLogFunction(db.sqlLogAll)
-	except:
-		if sqlLogging:
-			db.set_sqlLogFunction(db.sqlLogAll)
+	if sqlLogging:
+		db.set_sqlLogFunction(db.sqlLogAll)
 
 	return fp
 
