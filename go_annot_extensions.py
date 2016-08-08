@@ -28,7 +28,11 @@ _EXCLUDED_TERMS = [
 	'target',
 	'external ref',
 	'text',
-	'dual-taxon ID'
+	'dual-taxon ID',
+	'lego-model-id', 
+	'contributor', 
+	'individual', 
+	'go_qualifier'
 ]
 
 _PROPERTY_VOCAB_NAME = 'GO Property'
