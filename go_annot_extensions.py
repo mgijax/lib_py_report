@@ -18,7 +18,7 @@ db.setAutoTranslateBE(False)
 
 ### Private Constants ###
 
-# Property terms we don't use for annotation extensions
+# Property terms we don't use for annotation extensions or GAF file
 _EXCLUDED_TERMS = [
 	'evidence',
 	'anatomy',

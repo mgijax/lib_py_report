@@ -75,6 +75,7 @@ def init(outputfile,
 	 outputdir = None, 
 	 printHeading = 'JAX', 
 	 isHTML = 0, 
+	 isGZIP = 0,
 	 fileExt = None, 
 	 sqlOneConnection = 1,
 	 sqlLogging = 1):
