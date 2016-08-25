@@ -4,7 +4,7 @@ STAFF: lec
 CHANGES:
 TR12349/gone-dor & more 
 TR12345/GPAD/GPI
-1) go_annot_extensions.py : add more properties to exlude list
+1) go_annot_extensions.py : add more properties to exclude list
 
 TAG: lib_py_report-6-0-4-2
 TAG: lib_py_reports-6-0-4-1
