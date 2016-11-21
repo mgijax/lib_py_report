@@ -1,8 +1,7 @@
-TAG: lib_py_report-6-0-6-2
-DATE: 10/5/2016
-STAFF: dbm
-CHANGES:
-1) Install: remove files from lib/python before copying new ones
+TAG: lib_py_report-tr12069-BP
+DATE: 11/21/2016
+STAFF: sc
+CHANGES: Branch Point tag
 
 TAG: lib_py_report-6-0-6-1
 DATE: 09/08/2016
