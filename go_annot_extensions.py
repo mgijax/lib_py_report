@@ -13,9 +13,6 @@
 
 import db
 
-db.setAutoTranslate(False)
-db.setAutoTranslateBE(False)
-
 ### Private Constants ###
 
 # Property terms we don't use for annotation extensions or GAF file
