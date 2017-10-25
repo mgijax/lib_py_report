@@ -26,7 +26,7 @@ _EXCLUDED_TERMS = [
 	'external ref',
 	'text',
 	'dual-taxon ID',
-	'lego-model-id', 
+	'noctua-model-id', 
 	'contributor', 
 	'individual', 
 	'go_qualifier'
