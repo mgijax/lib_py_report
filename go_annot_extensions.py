@@ -28,6 +28,7 @@ _EXCLUDED_TERMS = [
 	'dual-taxon ID',
 	'noctua-model-id', 
 	'contributor', 
+	'model-state',
 	'individual', 
 	'go_qualifier'
 ]
