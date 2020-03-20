@@ -33,6 +33,23 @@ _EXCLUDED_TERMS = [
 	'go_qualifier'
 ]
 
+# Property terms we don't use for GPAD
+_GPAD_EXCLUDED_TERMS = [
+	'evidence',
+	'anatomy',
+	'cell type',
+	'gene product',
+	'modification',
+	'target',
+	'external ref',
+	'text',
+	'dual-taxon ID',
+	'noctua-model-id', 
+	'model-state',
+	'individual', 
+	'go_qualifier'
+]
+
 _PROPERTY_VOCAB_NAME = 'GO Property'
 
 
@@ -55,6 +72,9 @@ class Processor(object):
 		self.excludedTerms = _EXCLUDED_TERMS
 		self.propertyVocabName = _PROPERTY_VOCAB_NAME
 
+		self.gpad_excludedTerms = _GPAD_EXCLUDED_TERMS
+		self.gpad_propertyVocabName = _PROPERTY_VOCAB_NAME
+
 		self.excludedEvidenceCodes = _EXCLUDED_EVIDENCE_CODES
 		self.evidenceVocabName = _EVIDENCE_VOCAB_NAME
 
@@ -73,6 +93,26 @@ class Processor(object):
 		where v.name = '%s'
 			and t.term not in ('%s')
 		''' % ( self.propertyVocabName, "','".join(self.excludedTerms) )
+
+		results = db.sql(cmd, 'auto')
+
+		sanctionedTermKeys = [c['_term_key'] for c in results]
+		return sanctionedTermKeys
+
+	def querySanctionedGPADPropertyTermKeys(self):
+		"""
+		Query MGD for the sanctioned _propertyterm_keys
+		we can use for GPAD only
+		"""
+
+		cmd = '''
+		select _term_key
+		from voc_term t 
+		join voc_vocab v on
+			v._vocab_key = t._vocab_key
+		where v.name = '%s'
+			and t.term not in ('%s')
+		''' % ( self.gpad_propertyVocabName, "','".join(self.gpad_excludedTerms) )
 
 		results = db.sql(cmd, 'auto')
 
