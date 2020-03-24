@@ -127,7 +127,7 @@ def init(outputfile,
                 header(fp, printHeading)
 
                 if title is not None:
-                        fp.write(string.center(title, column_width) + 2 * CRT)
+                        fp.write(str.center(title, column_width) + 2 * CRT)
 
         if sqlOneConnection:
                 db.useOneConnection(1)
