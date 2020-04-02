@@ -54,7 +54,6 @@
 '''
 
 import sys
-import string
 import posix
 import os
 import mgi_utils
