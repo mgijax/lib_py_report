@@ -30,7 +30,8 @@ _EXCLUDED_TERMS = [
 	'contributor', 
 	'model-state',
 	'individual', 
-	'go_qualifier'
+	'go_qualifier',
+        'creation-date'
 ]
 
 _PROPERTY_VOCAB_NAME = 'GO Property'
