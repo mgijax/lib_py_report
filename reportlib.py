@@ -143,24 +143,10 @@ def header(fp, headerType = "JAX"):
         # effects: writes the specified header to the file
         '''
 
-        jaxheaderfile = '# The Jackson Laboratory - Mouse Genome Informatics (MGI)\n# Copyright 1996, 1999, 2002, 2005, 2008 The Jackson Laboratory\n# All Rights Reserved\n'
+        # headerType can be removed/don't use it anymore
 
-
-        #
-        # always write the JAX header
-        #
-
-        fp.write(jaxheaderfile)
-        fp.write('# Date Generated: %s\n' % (mgi_utils.date()))
-
-        #
-        # special case
-        #
-
-        if headerType == 'JAX':
-            fp.write('#\n')
-        else:
-            fp.write('# (server = %s, database = %s)\n#\n\n' % (db.get_sqlServer(), db.get_sqlDatabase()))
+        fp.write('#\n# Date Generated: %s\n' % (mgi_utils.date()))
+        fp.write('# (server = %s, database = %s)\n#\n\n' % (db.get_sqlServer(), db.get_sqlDatabase()))
 
 def finish_nonps(fp, isHTML = 0):
         '''
