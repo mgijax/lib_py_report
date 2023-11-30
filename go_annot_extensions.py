@@ -30,7 +30,6 @@ _EXCLUDED_TERMS = [
 	'contributor', 
 	'model-state',
 	'individual', 
-	'go_qualifier',
 	'go_qualifier_term',
 	'go_qualifier_id'
 ]
