@@ -25,7 +25,7 @@ _EXCLUDED_TERMS = [
 	'target',
 	'external ref',
 	'text',
-	'dual-taxon ID',
+	'Interacting taxon ID',
 	'noctua-model-id', 
 	'contributor', 
 	'model-state',

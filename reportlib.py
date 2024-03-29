@@ -2,11 +2,13 @@
 #
 # Purpose:
 #
-# Support routines for printing Editing Interface and other reports.
-# These routines are used by all Python reports installed in
-# titan:/export/mgd and other ad hoc Python reports.
+# Support routines for printing qcreports_db, reports_db
 #
 # History:
+#
+#       lec     12/2023
+#       wts2-1155/GOC taking over GOA mouse, GOA human, etc.
+#       remove: sqlOneConnection, sqlLogging
 #
 #       lec     05/31/2012
 #       - TR11093/create_accession_anchor/use new flavor of accession link
@@ -20,51 +22,17 @@
 #       - create_accession_anchor
 #       - use env variable 'WI_URL' when possible
 #
-#       lec     10/25/2007
-#       - TR 8557; create_accession_anchor/isANCHOR
-#
-#       lec     10/06/2006
-#       - TR 7943; change report headings; remove trailer
-#
-#       lec     04/24/2002
-#       - added fileExt to init()
-#
-#       lec     04/03/2000
-#       - convert to mgi_utils, db from mgdlib
-#       - remove accessionlib
-#
-#       lec     02/07/2000
-#       - TR 1350; changes to copyright notice (trailer())
-#
-#       lec     12/06/1999
-#       - TR 830; add parameters to init(), trailer() to format html output
-#
-#       cjd     12/07/1998
-#       - added trailer() function
-#
-#       lec     11/16/98
-#       - changed mgdreport to mgireport
-#
-#       lec     01/08/98
-#       - converted to new mgdlib API
-#       - added comments
-#       - removed 'def sql()'; obsolete function 
-#
 '''
 
 import sys
-import posix
 import os
-import mgi_utils
 import db
+import mgi_utils
 
 TAB = '\t'
 CRT = '\n'
-SEP = ', '
-DOT = '.   '
 SPACE = ' '
 PAGE = ''
-ULINE = '_'
 
 column_width = 76       # Maximum column width
  
@@ -73,17 +41,14 @@ def init(outputfile,
          outputdir = None, 
          printHeading = 'JAX', 
          isHTML = 0, 
-         fileExt = None, 
-         sqlOneConnection = 1,
-         sqlLogging = 1):
+         fileExt = None):
         '''
         # requires: outputfile, the name of the output file (string)
         #           title, the title of the report (string)
         #           outputdir, the directory in which to place the output file (string);
         #             the default is the current working directory
         #           printHeading, set to Header Type if the header is to be printed (default is JAX)
-        #           isHTML, set to 1 if the output file is HTML format, 0 otherwise
-        #               (default is 0)
+        #           isHTML, set to 1 if the output file is HTML format, 0 otherwise (default is 0)
         #           fileExt, the file extension of the output file (e.g. ".rpt", ".tab")
         #
         # effects:
@@ -112,7 +77,6 @@ def init(outputfile,
                 outputdir = os.getcwd()
 
         filename = outputdir + '/' + outputfile[0] + suffix
-
         fp = open(filename, 'w')
 
         if isHTML:
@@ -122,28 +86,19 @@ def init(outputfile,
                 # see finish_nonps for closing of these markups
 
         if printHeading is not None:
-                header(fp, printHeading)
-
+                header(fp)
                 if title is not None:
                         fp.write(str.center(title, column_width) + 2 * CRT)
 
-        if sqlOneConnection:
-                db.useOneConnection(1)
-
-        if sqlLogging:
-                db.set_sqlLogFunction(db.sqlLogAll)
+        db.set_sqlLogFunction(db.sqlLogAll)
 
         return fp
 
-def header(fp, headerType = "JAX"):
+def header(fp):
         '''
         # requires: fp, output file descriptor pointing to an open file
-        #       headerType, string that denotes which header to use
         # effects: writes the specified header to the file
         '''
-
-        # headerType can be removed/don't use it anymore
-
         fp.write('#\n# Date Generated: %s\n' % (mgi_utils.date()))
         fp.write('# (server = %s, database = %s)\n#\n\n' % (db.get_sqlServer(), db.get_sqlDatabase()))
 
@@ -164,7 +119,6 @@ def finish_nonps(fp, isHTML = 0):
                 fp.write("</HTML>")
 
         fp.close()
-        db.useOneConnection(0)
  
 def create_accession_anchor(id, accType = None):
         '''
